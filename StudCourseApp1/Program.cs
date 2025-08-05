@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StudCourseApp1;
@@ -121,6 +123,33 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+            .Where(e => e.Value.Errors.Count > 0)
+            .ToDictionary(
+                kvp => kvp.Key,
+                kvp =>
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var valueError in kvp.Value.Errors)
+                    {
+                        sb.Append(valueError.ErrorMessage);
+                    }
+
+                    return sb;
+                });
+        StringBuilder sb =  new StringBuilder();
+        foreach (var error in errors)
+        {
+            sb.Append(error.Key + " : " +error.Value + " ");
+        }
+        throw new ValidationException(sb.ToString());
+    };
+});
 
 
 var app = builder.Build();

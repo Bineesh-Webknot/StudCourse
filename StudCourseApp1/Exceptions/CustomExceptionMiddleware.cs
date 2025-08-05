@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 using StudCourseApp1.Dto;
@@ -38,7 +39,8 @@ public class CustomExceptionMiddleware
         {
             DataNotFoundException => (int)HttpStatusCode.NotFound,
             UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized,
-            BadHttpRequestException => (int)HttpStatusCode.BadRequest,
+            BadHttpRequestException  => (int)HttpStatusCode.BadRequest,
+            ValidationException  => (int)HttpStatusCode.BadRequest,
             _ => (int)HttpStatusCode.InternalServerError
         };
 
