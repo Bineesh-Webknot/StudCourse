@@ -1,31 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
-using StudCourseApp1.Dto;
+using StudCourseApp1.Services;
 
-namespace StudStudentApp1.Controllers;
+namespace StudCourseApp1.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class StudentController :  ControllerBase
 {
-      
-    public readonly StudentService _StudentService;
+    private readonly StudentService _studentService;
 
-    public StudentController(StudentService StudentService)
+    public StudentController(StudentService studentService)
     {
-        _StudentService = StudentService;
+        _studentService = studentService;
     }
     
     [HttpGet("list")]
     public IActionResult GetAllStudents()
     {
-        var result = _StudentService.GetAllStudents();
+        var result = _studentService.GetAllStudents();
         return Ok(result.Result);
     }
     
     [HttpGet]
     public IActionResult GetStudentById([FromQuery] int id)
     {
-        var result =  _StudentService.GetStudentById(id);
+        var result =  _studentService.GetStudentById(id);
         return Ok(result.Result);
     }
     

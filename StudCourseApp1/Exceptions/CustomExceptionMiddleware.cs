@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 using StudCourseApp1.Dto;
-using StudCourseApp1.Exceptions;
 
-namespace StudCourseApp1.Services;
+namespace StudCourseApp1.Exceptions;
 
 public class CustomExceptionMiddleware
 {

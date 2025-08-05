@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudCourseApp1.Dto;
-using StudCourseApp1.Models;
+using StudCourseApp1.Services;
 
 namespace StudCourseApp1.Controllers;
 
@@ -10,7 +10,7 @@ namespace StudCourseApp1.Controllers;
 public class CourseController :  ControllerBase
 {
     
-    public readonly CourseService _courseService;
+    private readonly CourseService _courseService;
 
     public CourseController(CourseService courseService)
     {
@@ -21,7 +21,7 @@ public class CourseController :  ControllerBase
     [HttpPost("add")]
     public IActionResult AddCourse([FromBody] CourseDto courseDto)
     {
-        var result = _courseService.addCourse(courseDto);
+        var result = _courseService.AddCourse(courseDto);
         return Ok(result);
     }
     

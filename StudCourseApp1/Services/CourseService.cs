@@ -5,7 +5,7 @@ using StudCourseApp1.Exceptions;
 using StudCourseApp1.Models;
 using StudCourseApp1.Repo;
 
-namespace StudCourseApp1;
+namespace StudCourseApp1.Services;
 
 public class CourseService
 {
@@ -18,7 +18,7 @@ public class CourseService
         _mapper = mapper;
     }
 
-    public CourseDto addCourse(CourseDto course)
+    public CourseDto AddCourse(CourseDto course)
     {
         var newCourse = _dbContext.Courses.AddAsync(new Course()
         {

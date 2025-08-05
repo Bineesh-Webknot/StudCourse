@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using StudCourseApp1.Dto;
+using StudCourseApp1.Services;
 
 namespace StudCourseApp1.Controllers;
 
@@ -22,12 +23,11 @@ public class AuthController : ControllerBase
         GenericResponse<string> response = await _authService.Register(model);
         if(response.StatusCode.Equals(200))
             return Ok(response);
-        else if(response.StatusCode.Equals(400))
+        if(response.StatusCode.Equals(400))
             return BadRequest(response);
-        else if(response.StatusCode.Equals(500))
+        if(response.StatusCode.Equals(500))
             return StatusCode(500);
-        else
-            return Empty;
+        return Empty;
     }
 
     [HttpPost("login")]
@@ -36,9 +36,8 @@ public class AuthController : ControllerBase
        GenericResponse<string> response = await _authService.Login(model);
        if(response.StatusCode.Equals(200))
             return Ok(response);
-       else if(response.StatusCode.Equals(400))
+       if(response.StatusCode.Equals(400))
            return BadRequest(response);
-       else
-           return Empty;
+       return Empty;
     }
 }

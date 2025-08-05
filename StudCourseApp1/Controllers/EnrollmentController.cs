@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudCourseApp1.Models;
 using StudCourseApp1.Services;
-using StudStudentApp1;
 
 namespace StudCourseApp1.Controllers;
 
@@ -10,8 +8,7 @@ namespace StudCourseApp1.Controllers;
 [Route("enroll")]
 public class EnrollmentController: ControllerBase
 {
-    
-    public readonly EnrollmentService _enrollmentService;
+    private readonly EnrollmentService _enrollmentService;
 
     public EnrollmentController(EnrollmentService enrollmentService)
     {
@@ -22,7 +19,6 @@ public class EnrollmentController: ControllerBase
     [HttpPost]
     public IActionResult Enrollment([FromQuery] List<int> courseIds)
     {
-        
         var result = _enrollmentService.Enroll(courseIds);
         return Ok(result.Result);
     }

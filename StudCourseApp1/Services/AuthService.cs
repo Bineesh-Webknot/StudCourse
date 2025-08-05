@@ -7,7 +7,7 @@ using StudCourseApp1.Dto;
 using StudCourseApp1.Models;
 using StudCourseApp1.Repo;
 
-namespace StudCourseApp1;
+namespace StudCourseApp1.Services;
 
 public class AuthService
 {
@@ -41,12 +41,12 @@ public class AuthService
         await _roleManager.CreateAsync(new IdentityRole("STUDENT"));
 
         await _userManager.AddToRoleAsync(user, "STUDENT");
-        var Student = new Student()
+        var student = new Student()
         {
             ApplicationUserId = user.Id,
             Dept = model.Dept
         };
-        _dbContext.Students.Add(Student);
+        _dbContext.Students.Add(student);
         await _dbContext.SaveChangesAsync();
         return new GenericResponse<string>
         {
@@ -93,16 +93,4 @@ public class AuthService
         throw new UnauthorizedAccessException("Unauthorized access");
     }
 
-    public async Task<string>  createAdminAcc()
-    {
-        var adminUser = await _userManager.FindByEmailAsync("admin@gmail.com");
-        if (adminUser != null){return "";}
-        var user = new ApplicationUser { UserName = "ADMIN", Email = "admin@gmail.com" };
-        var result = await _userManager.CreateAsync(user, "admin@123");
-        if (!result.Succeeded)
-           Console.WriteLine(result.Errors.First().Description);
-        await _roleManager.CreateAsync(new IdentityRole("ADMIN"));
-        await _userManager.AddToRoleAsync(user, "ADMIN");
-        return "Admin Acc created";
-    }
 }

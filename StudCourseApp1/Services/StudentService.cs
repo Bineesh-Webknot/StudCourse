@@ -2,10 +2,9 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StudCourseApp1.Dto;
 using StudCourseApp1.Exceptions;
-using StudCourseApp1.Models;
 using StudCourseApp1.Repo;
 
-namespace StudStudentApp1;
+namespace StudCourseApp1.Services;
 
 public class StudentService
 {
@@ -20,23 +19,23 @@ public class StudentService
     
     public async Task<List<StudentDto>> GetAllStudents()
     {
-        var Students = await _dbContext.Students
+        var students = await _dbContext.Students
             .Include(s => s.User)
             .ToListAsync();
-        var result = _mapper.Map<List<StudentDto>>(Students);
+        var result = _mapper.Map<List<StudentDto>>(students);
         return result;
     }
     
     public async Task<StudentDto> GetStudentById(int id)
     {
-        var Student = await _dbContext.Students
+        var student = await _dbContext.Students
             .Include(s => s.User)
             .FirstOrDefaultAsync(c => c.Id == id);
-        if (Student == null)
+        if (student == null)
         {
             throw new DataNotFoundException("Student not found");
         }
-        return _mapper.Map<StudentDto>(Student);;
+        return _mapper.Map<StudentDto>(student);
     }
     
 }
